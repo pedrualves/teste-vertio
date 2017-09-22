@@ -1,24 +1,26 @@
-﻿<!DOCTYPE html>
 <html>
-  <body>
-    <h1>IFRAME</h1>
-    <input type="text" />
-    <br>
-    <br>
-    <script>
-      function onSubmit(){
-        let onResponse = {
-          eventName: 'onResponse',
-          data: true,
-          message: {
-            key:"KEY",
-            text: "TEXT"
-          }
+  <head>
+    <title>reCAPTCHA demo: Explicit render after an onload callback</title>
+    <script type="text/javascript">
+
+        var onSubmit = function(token) {
+          console.log('success!');
         };
-        alert(onResponse.eventName)
-        parent.OnPrinterStateChanged(onResponse, '*');
-      }
+
+        var reCaptchaOnloadCallback = function() {
+          grecaptcha.render('submit', {
+            'sitekey' : '6LfhtTEUAAAAAAf7rCje5l6I2E3_UJ9tRZOmZvyi',
+            'callback' : onSubmit
+          });
+        };
     </script>
-    <button onclick="onSubmit()" type="button">TESTE</button>
+  </head>
+  <body>
+    <form action="?" method="POST">
+      <input id='submit' type="submit" value="Submit">
+    </form>
+    <script src="https://www.google.com/recaptcha/api.js?onload=reCaptchaOnloadCallback&render=explicit&hl=pt-BR"
+        async defer>
+    </script>
   </body>
 </html>
